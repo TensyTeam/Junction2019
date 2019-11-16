@@ -1,5 +1,9 @@
 from flask import request, jsonify
 from app import app, sio, SERVER
+from werkzeug.utils import secure_filename
+
+import string
+import random
 
 from api import API, Error
 
@@ -68,3 +72,26 @@ def index():
 			req['result'] = res
 
 	return jsonify(req)
+
+@app.route('/upload', methods=['POST'])
+def upload():
+	# Рандомное имя
+
+	ALL_SYMBOLS = string.ascii_letters
+	generate = lambda length=8: ''.join(random.choice(ALL_SYMBOLS) for _ in range(length))
+
+	# Сохранить
+
+	file = request.files['file']
+
+	name = generate() + '.' + secure_filename(file.filename).split('.')[-1]
+
+	file.save('app/static/stories/{}'.format(name))
+
+	# Вывод
+
+	res = {
+		'name': name,
+	}
+
+	return res
