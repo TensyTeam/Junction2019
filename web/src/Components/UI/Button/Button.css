@@ -1,0 +1,18 @@
+.btn {
+    color: #fff;
+    background: radial-gradient(circle farthest-corner at left top, #0C5AA6 0%, #6E86D6 100%);
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    outline: 0px;
+    text-align: center;
+    border: 0px;
+    font-weight: bold;
+    border-radius: 6px;
+    position: relative;
+}
+
+.btn:hover {
+    background: radial-gradient(circle farthest-corner at left top, #0C5AA6 100%, #6E86D6 0%);
+}
