@@ -13,6 +13,22 @@ thread = None
 thread_lock = Lock()
 
 
+# Отправить реакцию
+
+@sio.on('reaction_now', namespace='/main')
+def reaction(x):
+	db_filter = {'_id': False, 'user': True}
+	story = db['stories'].find_one({'id': x['id']}, db_filter)
+
+	if not story:
+		return
+	
+	sio.emit('reaction_now', {
+		'id': x['id'],
+		'user': story['user'],
+		'reaction': x['reaction'],
+	})
+
 # Онлайн пользователи
 
 @sio.on('online', namespace='/main')
