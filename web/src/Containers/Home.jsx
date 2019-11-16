@@ -1,9 +1,11 @@
 import React from 'react';
+// import { Link } from 'react-router-dom';
 
 import Loader from '../Components/UI/Loader/Loader.jsx';
 import StoriesList from '../Components/StoriesList/StoriesList.jsx';
 
 import { getStories } from '../Functions/methods';
+import { socketIo } from '../Functions/api';
 
 
 class Home extends React.Component {
@@ -16,6 +18,7 @@ class Home extends React.Component {
 	}
 
 	componentWillMount() {
+		// get stories
 		getStories(this).then((res) => {
 			console.log(res);
 			if (res.error === 0) {
@@ -23,6 +26,15 @@ class Home extends React.Component {
 				this.setState({ stories: res.result.stories });
 			}
         });
+
+		// wait reaction
+		const { token } = this.props;
+		socketIo.on('reaction_now', (mes) => {
+			if (mes.token === token) {
+				console.log('like_now', mes);
+				alert('like')
+			}
+		});
 	}
 
 	render() {
