@@ -4,6 +4,12 @@ class ErrorSpecified(Exception):
 	def __init__(self, par):
 		self.txt = par
 
+# Занято
+
+class ErrorBusy(Exception):
+	def __init__(self, par):
+		self.txt = par
+
 # Недопустимый
 # Не проходит по критерям
 

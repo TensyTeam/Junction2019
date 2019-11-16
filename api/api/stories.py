@@ -1,8 +1,8 @@
 import time
 
 from mongodb import db
-from api._error import ErrorWrong, ErrorUpload, ErrorAccess, ErrorInvalid
-from api._func import check_params, next_id, get_preview, load_image
+from api._error import ErrorAccess, ErrorBusy, ErrorWrong
+from api._func import check_params, next_id, get_file
 
 
 # Создание
@@ -19,6 +19,11 @@ def add(this, **x):
 	if this.user['admin'] < 3:
 		raise ErrorAccess('add')
 
+	# Уже добавлено
+
+	if db['stories'].find_one({'video': x['video']}, {'_id': True}):
+		raise ErrorBusy('video') # ErrorAlready
+
 	#
 
 	query = {
@@ -27,27 +32,6 @@ def add(this, **x):
 		'user': this.user['token'],
 		'video': x['video'],
 	}
-
-	# Загрузка видео
-
-	# if 'video' in x:
-	# 	try:
-	# 		file_type = x['file'].split('.')[-1]
-		
-	# 	# Неправильное расширение
-	# 	except:
-	# 		raise ErrorInvalid('file')
-
-	# 	try:
-	# 		load_image('app/static/tasks', x['video'], query['id'], file_type)
-
-	# 	# Ошибка загрузки видео
-	# 	except:
-	# 		raise ErrorUpload('video')
-
-	#######
-	# video = request.files["file"]
-	# print(video)
 
 	#
 
@@ -138,13 +122,20 @@ def get(this, **x):
 
 		stories[ind]['online'] = user['online']
 
+		# Удаление полей
+
+		del stories[ind]['user']
+		del stories[ind]['time']
+
+		#
+
 		ind += 1
 
 	# Количество
 
 	stories = stories[:count]
 
-	# Изображение
+	# Видео
 
 	for i in range(len(stories)):
 		stories[i]['video'] = this.server['link'] + 'static/stories/' + stories[i]['video']
@@ -170,7 +161,16 @@ def delete(this, **x):
 
 	story = db['stories'].find_one({'id': x['id']})
 
-	if this.user['admin'] < 3 or story['token'] != this.user['token']:
+	# Неправильный ID
+
+	if not story:
+		raise ErrorWrong('id')
+
+	# Нет прав
+
+	if this.user['admin'] < 3 or story['user'] != this.user['token']:
 		raise ErrorAccess('token')
+
+	#
 
 	db['stories'].delete_one(story)
