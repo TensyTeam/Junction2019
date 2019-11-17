@@ -37,8 +37,10 @@ def add(this, **x):
 
 	db['stories'].save(query)
 
-	if '_id' in query:
-		del query['_id']
+	# Убираем лишние поля
+
+	del query['_id']
+	del query['time']
 
 	# Прикрепление задания к пользователю
 
@@ -47,7 +49,8 @@ def add(this, **x):
 
 	# Обновление списка историй
 
-	this.socketio.emit('story_add', [query], namespace='/main')
+	query['video'] = this.server['link'] + 'static/stories/' + query['video']
+	this.socketio.emit('story_add', query, namespace='/main')
 
 	# Ответ
 
@@ -99,7 +102,7 @@ def get(this, **x):
 		'_id': False,
 	}
 
-	stories = [i for i in db['stories'].find(db_condition, db_filter) if i]
+	stories = [i for i in db['stories'].find(db_condition, db_filter).sort('time', -1) if i]
 
 	# Выборка
 
