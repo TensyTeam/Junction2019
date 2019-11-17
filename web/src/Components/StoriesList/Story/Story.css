@@ -1,3 +1,44 @@
 .story {
     padding: 10px;
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 14px;
+    width: calc(90% - 20px);
+    margin: auto;
+    margin-bottom: 40px;
+}
+
+.story_wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.story video {
+    width: 100%;
+    border-radius: 14px;
+}
+
+.story_reactions {
+    position: absolute;
+    z-index: 10;
+    background: #5946a8;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    display: flex;
+    padding: 10px;
+    justify-content: space-around;
+    border-radius: 14px;
+}
+
+.story_reactions img {
+    width: 25px;
+    height: auto;
+}
+
+.story_reactions span {
+    cursor: pointer;
 }
