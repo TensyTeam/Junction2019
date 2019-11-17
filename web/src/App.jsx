@@ -65,6 +65,7 @@ export default class App extends React.Component {
 		} = this.state;
 		return (
 			<BrowserRouter>
+				<div id="snow"></div>
 				<div className="module">
 					{showPopup.active && (
 						<Popup

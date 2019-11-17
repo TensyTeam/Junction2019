@@ -30,13 +30,18 @@ class Home extends React.Component {
 		// wait reaction
 		const { token } = this.props;
 		socketIo.on('reaction_now', (mes) => {
-			console.log('reaction_now', mes);
 			if (mes.user === token) {
-				const snow_img = "/img/reactions/1.png";
+				const snow_img = [
+					"/img/reactions/1.png",
+					"/img/reactions/2.png",
+					"/img/reactions/3.png",
+					"/img/reactions/4.png",
+					"/img/reactions/5.png",
+				];
 			    let snow_browser_width;
 			    let snow_browser_height;
-			    const snow_no = 56;
-			    var timeszimaon = 1;
+			    const snow_no = 20;
+			    let timeszimaon = 1;
 			    if (typeof(window.pageYOffset) == "number") {
 			        snow_browser_width = window.innerWidth;
 			        snow_browser_height = window.innerHeight;
@@ -57,6 +62,7 @@ class Home extends React.Component {
 			    let snow_stx = [];
 			    let snow_sty = [];
 			    if (timeszimaon === 1) {
+					const snowParent = document.getElementById('snow');
 			        for (let i = 0; i < snow_no; i++) {
 			            snow_dx[i] = 0;
 			            snow_xp[i] = Math.random() * (snow_browser_width - 50);
@@ -64,13 +70,43 @@ class Home extends React.Component {
 			            snow_am[i] = Math.random() * 20;
 			            snow_stx[i] = 0.02 + Math.random() / 10;
 			            snow_sty[i] = 0.7 + Math.random();
-			            if (i === 0) document.write("<\div id=\"snow_flake0\" style=\"position:absolute;z-index:0\"><a href=\"#\" target=\"_blank\"><\img src=\"" + snow_img + "\" border=\"0\"></a><\/div>");
-			            else document.write("<\div id=\"snow_flake" + i + "\" style=\"position:absolute;z-index:10000" + i + "\"><\img src=\"" + snow_img + "\" border=\"0\"><\/div>");
+			            if (i === 0) {
+							const snowDiv = document.createElement('div');
+							snowDiv.style.position = 'absolute';
+							snowDiv.style.zIndex = '0';
+							snowDiv.id = 'snow_flake0';
+
+							const snowA = document.createElement('a');
+							snowA.target = '_blank';
+
+							const snowImg = document.createElement('img');
+							snowImg.style.border = '0';
+							snowImg.style.width = '30px';
+							snowImg.style.height = 'auto';
+							snowImg.src = snow_img[mes.reaction];
+
+							snowA.appendChild(snowImg);
+							snowDiv.appendChild(snowA);
+							snowParent.appendChild(snowDiv);
+						} else {
+							const snowDiv = document.createElement('div');
+							snowDiv.style.position = 'absolute';
+							snowDiv.style.zIndex = `10000${i}`;
+							snowDiv.id = `snow_flake${i}`;
+
+							const snowImg = document.createElement('img');
+							snowImg.style.border = '0';
+							snowImg.style.width = '30px';
+							snowImg.style.height = 'auto';
+							snowImg.src = snow_img[mes.reaction];
+
+							snowDiv.appendChild(snowImg);
+							snowParent.appendChild(snowDiv);
+						}
 			        }
 			    }
 
 			    function SnowStart() {
-					setTimeout(() => {
 						for (let i = 0; i < snow_no; i++) {
 						   snow_yp[i] += snow_sty[i];
 						   if (snow_yp[i] > snow_browser_height - 50) {
@@ -83,7 +119,9 @@ class Home extends React.Component {
 						   document.getElementById("snow_flake" + i).style.top = snow_yp[i] + "px";
 						   document.getElementById("snow_flake" + i).style.left = snow_xp[i] + snow_am[i] * Math.sin(snow_dx[i]) + "px";
 					   }
-				   	}, 10);
+					setTimeout(() => {
+						SnowStart();
+					}, 10);
 				}
 
 			    if (timeszimaon === 1) {
@@ -92,6 +130,20 @@ class Home extends React.Component {
 			}
 		});
 	}
+
+	componentDidMount() {
+		socketIo.on('story_add', (mes) => {
+			const { token } = this.props;
+			const { stories } = this.state;
+
+			if (mes.user !== token) {
+				mes['online'] = true;
+				stories.unshift(mes);
+
+				this.setState({ stories });
+			}
+		});
+	 }
 
 	onLike(_videoId, _reaction) {
 		// send reaction

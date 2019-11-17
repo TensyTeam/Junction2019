@@ -160,6 +160,7 @@ form {
     width: 50vw;
     border-radius: 14px;
     margin: 20px 0;
+    max-width: 300px;
 }
 
 .btn-file:hover {
