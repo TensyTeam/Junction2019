@@ -2,7 +2,7 @@ import time
 
 
 from mongodb import db
-###
+import api.stories as stories
 import api._error as Error
 
 
@@ -27,7 +27,7 @@ class API():
 			if not self.user:
 				self.user = {
 					'token': token,
-					'tasks': [],
+					'stories': [],
 					'admin': 3,
 					'online': True,
 					'last': self.timestamp,

@@ -41,6 +41,10 @@ def index():
 		req['error'] = 4
 		req['result'] = str(e)
 
+	except Error.ErrorBusy as e:
+		req['error'] = 5
+		req['result'] = str(e)
+
 	except Error.ErrorInvalid as e:
 		req['error'] = 6
 		req['result'] = str(e)

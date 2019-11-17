@@ -13,56 +13,10 @@ from sets import CLIENT
 
 # Проверить наличие файла по имени
 
-def get_file(url, num):
+def get_file(url, name):
 	url = '/static/' + url + '/'
 
-	for i in os.listdir('app' + url):
-		if re.search(r'^' + str(num) + '\.', i):
-			return i
-
-	return None
-
-# Ссылка на файл
-
-def get_preview(url, num=0):
-	src =  CLIENT['link'] + 'load/' + url + '/'
-
-	file = get_file(url, num)
-	if file:
-		return src + file
-
-	return src + '0.png'
-
-# ID следующего изображения
-
-def max_image(url):
-	x = os.listdir(url)
-	k = 0
-	for i in x:
-		j = re.findall(r'\d+', i)
-		if len(j) and int(j[0]) > k:
-			k = int(j[0])
-	return k+1
-
-# Загрузить изображение
-
-def load_image(url, data, adr=None, format='jpg', type='base64'):
-	if type == 'base64':
-		data = base64.b64decode(data)
-
-	if adr:
-		id = adr
-
-		for i in os.listdir(url):
-			if re.search(r'^' + str(id) + '\.', i):
-				os.remove(url + '/' + i)
-	else:
-		id = max_image(url)
-
-	with open('{}/{}.{}'.format(url, str(id), format), 'wb') as file:
-		file.write(data)
-
-	return id
+	return name in os.listdir('app' + url)
 
 # Проверка параметров
 
