@@ -15,7 +15,7 @@ export function getStories(that, data = {}) {
     });
 }
 
-export function addStories(that, data = {}) {
+export function addStory(that, data = {}) {
     return new Promise((resolve) => {
         const handlerSuccess = (other, res) => {
             resolve(res);

@@ -1,19 +1,34 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Button.css';
 
 const Button = (props) => {
     const {
-        onClick, disabled, children,
+        onClick, disabled, children, style, typeBtn, linkTo,
     } = props;
     return (
-	<button
-		onClick={onClick}
-		className="btn"
-		disabled={disabled}
-		type="submit"
-	>
-		{children}
-	</button>
+        <>
+            {typeBtn === 'link' ? (
+                <Link
+                    to={linkTo}
+            		onClick={onClick}
+            		className="btn"
+            		style={style}
+            	>
+            		{children}
+            	</Link>
+            ) : (
+                <button
+            		onClick={onClick}
+            		className="btn"
+            		disabled={disabled}
+            		style={style}
+            		type="submit"
+            	>
+            		{children}
+            	</button>
+            )}
+        </>
     );
 };
 

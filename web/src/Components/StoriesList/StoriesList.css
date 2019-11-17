@@ -1,4 +1,11 @@
 .stories_list {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    margin-top: 10px;
+    padding-top: 40px;
+    margin: 0 10px;
+    width: calc(100% - 20px);
+    background: #fff;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
 }

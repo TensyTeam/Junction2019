@@ -18,7 +18,7 @@ body {
     padding: 0;
     font-family: ProximaNova, sans-serif;
     color: #34495e;
-    background: #fff;
+    background: #5a46a8;
 }
 
 body>iframe {
@@ -31,11 +31,18 @@ a {
 }
 
 .title {
-    margin: 20px;
+    margin: 20px 30px 0 30px;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 36px;
     line-height: 36px;
-    color: #5c6ffa;
+    color: #fff;
+}
+
+.subtitle {
+    margin: 0 0 10px 30px;
+    font-weight: lighter;
+    font-size: 16px;
+    color: #d0cee4;
 }
 
 #root {
@@ -49,7 +56,7 @@ a {
 }
 
 .content {
-    margin: 0 20px;
+    margin: 0;
 }
 
 .popup {
@@ -138,4 +145,80 @@ a {
     position: absolute;
     top: 0;
     right: 0;
+}
+
+form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    flex-direction: column;
+    margin: auto;
+}
+
+#video_img {
+    width: 50vw;
+    border-radius: 14px;
+    margin: 20px 0;
+}
+
+.btn-file:hover {
+    background: #3498db;
+    color: #fff;
+}
+
+.btn-file .fas {
+    font-size: 40px;
+    color: #fff;
+}
+
+.input-file {
+    width: .1px;
+    height: .1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1
+}
+
+.gradient {
+    font-weight: bold;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    position: relative;
+}
+
+.gradient_cold {
+    background-image: linear-gradient(30deg, #009cf3, #16d6d9);
+}
+
+.gradient_hot {
+    background-image: linear-gradient(30deg, #fe6786, #e89253);
+}
+
+.gradient_green {
+    background-image: linear-gradient(30deg, #16d6d9, #96cc29);
+}
+
+.gradient_junction {
+    background-image: linear-gradient(145deg, rgb(188, 87, 0) 0%, rgb(245, 133, 50) 100%);
+}
+
+.title_group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-file {
+    justify-content: center !important;
+    background: transparent !important;
+    height: 60vh !important;
+    border: 2px dashed #fff !important;
+    border-radius: 6px !important;
+    margin: 20px auto 10px !important;
+    width: 60vw !important;
+    display: flex !important;
+    align-items: center !important;
 }
