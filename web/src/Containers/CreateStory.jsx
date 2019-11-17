@@ -23,15 +23,23 @@ class CreateStory extends React.Component {
 
 		// processing video
 	    const data = new FormData();
-	    data.append('file', this.uploadInput.files[0]);
+		if (this.uploadInput !== null) {
+			data.append('file', this.uploadInput.files[0]);
 
-		// send data
-	    axios.post('https://tensyteam.ru/api/upload', data).then((response) => {
-			addStory(this, { video: response.data.name }).then((res) => {
-				this.setState({ videoName: response.data.name });
+			// send data
+			if (this.uploadInput.files[0] !== undefined) {
+			    axios.post('https://tensyteam.ru/api/upload', data).then((response) => {
+					onPopup(false);
+					addStory(this, { video: response.data.name }).then((res) => {
+						this.setState({ videoName: response.data.name });
+			        });
+			    });
+			} else {
 				onPopup(false);
-	        });
-	    });
+			}
+		} else {
+			onPopup(false);
+		}
 	}
 
 	render() {

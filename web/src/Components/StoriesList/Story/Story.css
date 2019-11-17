@@ -23,7 +23,7 @@
 
 .story_reactions {
     position: absolute;
-    z-index: 10;
+    z-index: 1000000;
     background: #5946a8;
     bottom: -5px;
     left: 0;
