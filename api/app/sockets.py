@@ -27,7 +27,7 @@ def reaction(x):
 		'id': x['id'],
 		'user': story['user'],
 		'reaction': x['reaction'],
-	})
+	}, namespace='/main')
 
 # Онлайн пользователи
 
