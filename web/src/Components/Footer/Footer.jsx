@@ -4,7 +4,7 @@ import './Footer.css';
 
 const Footer = () => (
 	<div className="footer">
-		<div>Junction 2019</div>
+		<div className="gradient gradient_junction">Junction 2019</div>
 	</div>
 );
 

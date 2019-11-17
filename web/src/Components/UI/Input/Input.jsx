@@ -4,6 +4,7 @@ import './Input.css';
 const Input = (props) => {
     const {
         onClick, name, id, type, onChange, disabled, className, required, value, style, placeholder,
+        refprop,
     } = props;
     return (
 	<input
@@ -18,6 +19,7 @@ const Input = (props) => {
 		value={value}
 		style={style}
 		placeholder={placeholder}
+        ref={refprop}
 	/>
     );
 };

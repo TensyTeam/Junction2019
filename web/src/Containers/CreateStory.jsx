@@ -1,80 +1,82 @@
 import React from 'react';
 import axios from 'axios';
-// import { Link } from 'react-router-dom';
 
 import Button from '../Components/UI/Button/Button.jsx';
 import Input from '../Components/UI/Input/Input.jsx';
-// import { addStory } from '../Functions/methods';
+import { addStory } from '../Functions/methods';
 
 class CreateStory extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			newStory: {
-				video: '',
-				imageURL: '',
-			},
+			videoName: '',
 			responce: false,
 		};
-		this.onCreate = this.onCreate.bind(this);
-    	this.handleUploadImage = this.handleUploadImage.bind(this);
+    	this.handleUploadVideo = this.handleUploadVideo.bind(this);
 	}
 
-	onCreate() {
-		// method addStory
-	}
-
-	handleUploadImage(ev) {
+	handleUploadVideo(ev) {
 	    ev.preventDefault();
 
+		// processing video
 	    const data = new FormData();
 	    data.append('file', this.uploadInput.files[0]);
-	    data.append('filename', this.fileName.value);
 
-	    axios.post('http://localhost:5000/upload', data).then((response) => {
-			console.log(response.data.name);
-	        // response.json().then((body) => {
-	        //     this.setState({
-	        //         imageURL: `http://localhost:5000/upload/${body.file}`
-	        //     });
-	        // });
+		// send data
+	    axios.post('https://tensyteam.ru/api/upload', data).then((response) => {
+			addStory(this, { video: response.data.name }).then((res) => {
+				console.log(res);
+				this.setState({ videoName: response.data.name });
+	        });
 	    });
 	}
 
 	render() {
-		const { responce } = this.state;
+		const { videoName } = this.state;
 		return (
 			<div className="content">
-				<div className="title">Create story</div>
-				{ /* <form className="form">
-					<img id="video_cover_img" className="video_img" src="https://tensyteam.ru/static/ladders/0.png" alt="" />
-					<label className="btn btn-file" id="cover_btn" htmlFor="cover">
-						<Input
-							id="cover"
-							name="image"
-							type="file"
-							className="input-file"
-							placeholder="For video"
-						/>
-						<i className="fas fa-file-upload" />
-						<span>Upload video</span>
-					</label>
-					<Button onClick={responce ? {} : this.onCreate}>
-						Create
+				<div className="title title_group">
+					<span>Create story</span>
+					<Button
+						typeBtn="link"
+						linkTo="/"
+						style={{ padding: '0px 15px', marginRight: '0' }}
+					>
+						<i className="fas fa-times" />
 					</Button>
-				</form> */}
-				<form onSubmit={this.handleUploadImage}>
-			        <div>
-			          <input ref={(ref) => { this.uploadInput = ref; }} type="file" />
-			        </div>
-			        <div>
-			          <input ref={(ref) => { this.fileName = ref; }} type="text" placeholder="Enter the desired name of file" />
-			        </div>
-			        <br />
-			        <div>
-			          <button>Upload</button>
-			        </div>
-			        <img src={this.state.imageURL} alt="img" />
+				</div>
+				<div className="subtitle">Share your emotions</div>
+				<form onSubmit={this.handleUploadVideo}>
+					{videoName.length === 0 ? (
+						<label className="btn btn-file" id="video_btn" htmlFor="video_cover" style={{ background: 'transparent' }}>
+							<Input
+								id="video_cover"
+								name="video"
+								type="file"
+								className="input-file"
+								placeholder="For video"
+								refprop={(ref) => { this.uploadInput = ref; }}
+
+							/>
+							<i className="fas fa-file-upload" />
+						</label>
+					) : (
+						<video id="video_img" src={`https://tensyteam.ru/api/static/stories/${videoName}`} />
+					)}
+					<Button
+						style={{
+							position: 'absolute',
+						    bottom: 0,
+						    zIndex: 10,
+						    right: 0,
+						    left: 0,
+						    width: '80%',
+						    margin: '20px auto',
+						    height: '70px',
+						}}
+					>
+						Upload
+					</Button>
 			      </form>
 			</div>
 		);

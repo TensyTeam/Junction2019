@@ -9,7 +9,6 @@ import CreateStory from './Containers/CreateStory.jsx';
 import Videochat from './Containers/Videochat.jsx';
 import Popup from './Containers/Popup.jsx';
 import Footer from './Components/Footer/Footer.jsx';
-import Header from './Components/Header/Header.jsx';
 
 import { socketIo } from './Functions/api';
 
@@ -74,7 +73,6 @@ export default class App extends React.Component {
 							onRedirect={this.onRedirect}
 						/>
 					)}
-					<Header />
 					<Switch>
 						{redirect.status === true && (
 							<>
