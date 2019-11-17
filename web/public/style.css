@@ -173,6 +173,12 @@ form {
     color: #fff;
 }
 
+.btn-file span {
+    font-size: 20px;
+    color: #fff;
+    margin-top: 10px;
+}
+
 .input-file {
     width: .1px;
     height: .1px;
@@ -222,4 +228,5 @@ form {
     width: 60vw !important;
     display: flex !important;
     align-items: center !important;
+    flex-direction: column;
 }

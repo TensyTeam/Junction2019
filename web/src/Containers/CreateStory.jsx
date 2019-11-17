@@ -25,7 +25,6 @@ class CreateStory extends React.Component {
 		// send data
 	    axios.post('https://tensyteam.ru/api/upload', data).then((response) => {
 			addStory(this, { video: response.data.name }).then((res) => {
-				console.log(res);
 				this.setState({ videoName: response.data.name });
 	        });
 	    });
@@ -58,6 +57,7 @@ class CreateStory extends React.Component {
 								refprop={(ref) => { this.uploadInput = ref; }}
 							/>
 							<i className="fas fa-file-upload" />
+							<span>Attach</span>
 						</label>
 					) : (
 						<video id="video_img" src={`https://tensyteam.ru/api/static/stories/${videoName}`} />
@@ -74,7 +74,7 @@ class CreateStory extends React.Component {
 						    height: '70px',
 						}}
 					>
-						Upload
+						Publish
 					</Button>
 			      </form>
 			</div>

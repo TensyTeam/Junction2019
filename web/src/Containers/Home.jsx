@@ -14,6 +14,7 @@ class Home extends React.Component {
 		this.state = {
 			stories: [],
 			responce: false,
+			smile: false,
 		};
 		this.onLike = this.onLike.bind(this);
 	}
@@ -31,6 +32,9 @@ class Home extends React.Component {
 		const { token } = this.props;
 		socketIo.on('reaction_now', (mes) => {
 			if (mes.user === token) {
+				this.setState({ smile: true });
+
+				// start snowing smile
 				const snow_img = [
 					"/img/reactions/1.png",
 					"/img/reactions/2.png",
@@ -62,6 +66,7 @@ class Home extends React.Component {
 			    let snow_stx = [];
 			    let snow_sty = [];
 			    if (timeszimaon === 1) {
+					document.getElementById('snow').innerHTML='';
 					const snowParent = document.getElementById('snow');
 			        for (let i = 0; i < snow_no; i++) {
 			            snow_dx[i] = 0;
@@ -118,11 +123,23 @@ class Home extends React.Component {
 						   snow_dx[i] += snow_stx[i];
 						   document.getElementById("snow_flake" + i).style.top = snow_yp[i] + "px";
 						   document.getElementById("snow_flake" + i).style.left = snow_xp[i] + snow_am[i] * Math.sin(snow_dx[i]) + "px";
-					   }
-					setTimeout(() => {
-						SnowStart();
-					}, 10);
+					    }
+
 				}
+
+				const intervalStopSnow = setInterval(() => {
+					const { smile } = this.state;
+					if (smile) {
+						SnowStart();
+					} else {
+						clearInterval(intervalStopSnow);
+					}
+				}, 10);
+
+				setTimeout(() => {
+					document.getElementById('snow').innerHTML='';
+					this.setState({ smile: false });
+				}, 2000);
 
 			    if (timeszimaon === 1) {
 			        SnowStart();
@@ -147,7 +164,6 @@ class Home extends React.Component {
 
 	onLike(_videoId, _reaction) {
 		// send reaction
-		console.log('!');
 		socketIo.emit('reaction_now', {
 			id: _videoId,
 			reaction: _reaction,
@@ -159,7 +175,7 @@ class Home extends React.Component {
 		return (
 			<div className="content">
 				<div className="title title_group">
-					<span>Hi</span>
+					<span>Hi, my friend</span>
 					<Button
 						typeBtn="link"
 						linkTo="/create/story"
