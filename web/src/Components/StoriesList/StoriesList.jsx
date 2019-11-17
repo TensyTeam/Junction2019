@@ -6,7 +6,7 @@ import './StoriesList.css';
 
 const StoriesList = (props) => {
 	const {
-		stories, onCallStory,
+		stories, onLike,
 	} = props;
 	return (
 		<div className="stories_list">
@@ -14,7 +14,7 @@ const StoriesList = (props) => {
 				<Story
 					key={story.id}
 					story={story}
-					onCallStory={onCallStory}
+					onLike={onLike}
 				/>
 			))}
 		</div>
