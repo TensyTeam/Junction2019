@@ -16,7 +16,10 @@ class CreateStory extends React.Component {
 	}
 
 	handleUploadVideo(ev) {
+		const { onPopup } = this.props;
 	    ev.preventDefault();
+		// loader
+		onPopup(true, 'loader');
 
 		// processing video
 	    const data = new FormData();
@@ -26,6 +29,7 @@ class CreateStory extends React.Component {
 	    axios.post('https://tensyteam.ru/api/upload', data).then((response) => {
 			addStory(this, { video: response.data.name }).then((res) => {
 				this.setState({ videoName: response.data.name });
+				onPopup(false);
 	        });
 	    });
 	}
