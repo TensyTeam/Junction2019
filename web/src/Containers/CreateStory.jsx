@@ -56,7 +56,6 @@ class CreateStory extends React.Component {
 								className="input-file"
 								placeholder="For video"
 								refprop={(ref) => { this.uploadInput = ref; }}
-
 							/>
 							<i className="fas fa-file-upload" />
 						</label>

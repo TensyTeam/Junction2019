@@ -21,7 +21,6 @@ class Home extends React.Component {
 	componentWillMount() {
 		// get stories
 		getStories(this).then((res) => {
-			console.log(res);
 			if (res.error === 0) {
 				this.setState({ responce: true });
 				this.setState({ stories: res.result.stories });
@@ -32,9 +31,8 @@ class Home extends React.Component {
 		const { token } = this.props;
 		socketIo.on('reaction_now', (mes) => {
 			console.log('reaction_now', mes);
-			if (mes.token === token) {
-				alert('like');
-				const snow_img = "snow.png";
+			if (mes.user === token) {
+				const snow_img = "/img/reactions/1.png";
 			    let snow_browser_width;
 			    let snow_browser_height;
 			    const snow_no = 56;
@@ -72,20 +70,22 @@ class Home extends React.Component {
 			    }
 
 			    function SnowStart() {
-			        for (let i = 0; i < snow_no; i++) {
-			            snow_yp[i] += snow_sty[i];
-			            if (snow_yp[i] > snow_browser_height - 50) {
-			                snow_xp[i] = Math.random() * (snow_browser_width - snow_am[i] - 30);
-			                snow_yp[i] = 0;
-			                snow_stx[i] = 0.02 + Math.random() / 10;
-			                snow_sty[i] = 0.7 + Math.random();
-			            }
-			            snow_dx[i] += snow_stx[i];
-			            document.getElementById("snow_flake" + i).style.top = snow_yp[i] + "px";
-			            document.getElementById("snow_flake" + i).style.left = snow_xp[i] + snow_am[i] * Math.sin(snow_dx[i]) + "px";
-			        }
-			        let snow_time = setTimeout("SnowStart()", 10);
-			    }
+					setTimeout(() => {
+						for (let i = 0; i < snow_no; i++) {
+						   snow_yp[i] += snow_sty[i];
+						   if (snow_yp[i] > snow_browser_height - 50) {
+							   snow_xp[i] = Math.random() * (snow_browser_width - snow_am[i] - 30);
+							   snow_yp[i] = 0;
+							   snow_stx[i] = 0.02 + Math.random() / 10;
+							   snow_sty[i] = 0.7 + Math.random();
+						   }
+						   snow_dx[i] += snow_stx[i];
+						   document.getElementById("snow_flake" + i).style.top = snow_yp[i] + "px";
+						   document.getElementById("snow_flake" + i).style.left = snow_xp[i] + snow_am[i] * Math.sin(snow_dx[i]) + "px";
+					   }
+				   	}, 10);
+				}
+
 			    if (timeszimaon === 1) {
 			        SnowStart();
 			    }
@@ -125,7 +125,7 @@ class Home extends React.Component {
 				) : (
 					<>
 						{responce ? (
-							<div style={{ textAlign: 'center', marginTop: '20px' }}>Not found</div>
+							<div style={{ textAlign: 'center', marginTop: '20px', color: '#fff' }}>Not found</div>
 						) : (
 							<Loader />
 						)}
