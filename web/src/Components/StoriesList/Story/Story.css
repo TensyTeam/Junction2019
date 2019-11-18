@@ -1,6 +1,5 @@
 .story {
     padding: 10px;
-    height: 300px;
     position: relative;
     overflow: hidden;
     border-radius: 14px;
@@ -23,7 +22,7 @@
 
 .story_reactions {
     position: absolute;
-    z-index: 1000000;
+    z-index: 99;
     background: #5946a8;
     bottom: -5px;
     left: 0;

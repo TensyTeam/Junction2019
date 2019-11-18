@@ -10,11 +10,11 @@ class Popup extends React.Component {
 		} = this.props;
 		return (
 			<>
-				{showPopup.current === 'success' && (
+				{showPopup.current === 'thank' && (
 					<div className="popup">
 						<div className="popup_close_panel" onClick={() => { onPopup(false, null); }} />
 						<div className="popup_content">
-							<div className="title">Success</div>
+							<div className="title">Thank you, for support :)</div>
 						</div>
 					</div>
 				)}

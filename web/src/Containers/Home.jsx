@@ -163,6 +163,8 @@ class Home extends React.Component {
 	 }
 
 	onLike(_videoId, _reaction) {
+		const { onPopup } = this.props;
+		onPopup(true, 'thank');
 		// send reaction
 		socketIo.emit('reaction_now', {
 			id: _videoId,

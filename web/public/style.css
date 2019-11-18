@@ -130,8 +130,13 @@ a {
     border-radius: 4px;
     z-index: 101;
     padding: 20px;
-    min-width: 280px;
-    max-width: 500px;
+    min-width: 250px;
+    max-width: 250px;
+}
+
+.popup_content .title {
+    color: #5a46a8;
+    font-size: 20px;
 }
 
 .popup_content .popup_text {
